@@ -8,53 +8,38 @@ import styles from '../styles/Home.module.css'
 const Home: NextPage = () => {
 
 
+const initialTime = 10
 const [timerStatus, setTimerStatus] = useState(0); //can be STOP(0) or START(1)
-const [timerValue, setTimerValue] = useState(5); //This contains the current time on the counter
+const [timerValue, setTimerValue] = useState(initialTime); //This contains the current time on the counter
 
 
-const timerValueRef = useRef(timerValue);
-//const timerStatusRef = useRef(timerStatus);
-
-
-function onToggle(e){
-  console.log('toggled');
-  timerStatus === 0 ? setTimerStatus(1) : setTimerStatus(0)
+function onToggle(){
+  timerStatus === 0 ? setTimerStatus(1) :  setTimerStatus(0)
 }
 
-function counter() {
-      setTimerValue(timerValue - 1)
-}
 
  useEffect(() => {
 console.log('useeffect')
 
         const interval = setInterval(() => {
           if(timerStatus === 0) {
-             return  setTimerValue(5)
-
-          } else if(timerValueRef.current === 0 ) {
-            console.log('here')
-               return
+             return  
           }
           else{
-            timerValueRef.current--
-            setTimerValue(timerValueRef.current - 1)
-
-              if(timerValueRef.current === 0) {
-                setTimerStatus(0)
-                setTimerValue(5)
-                clearInterval(interval)
-              }
+            setTimerValue(timerValue - 1)
+            if(timerValue === 1) {
+              setTimerStatus(0)
+              setTimerValue(initialTime)
+            }
 
           }
-
-
         } , 1000)
 
-       
+        return ()=> {
+            clearInterval(interval);
+          };
 
-     
-}, [timerStatus, timerValue, setTimerStatus, setTimerValue ]);
+});
 
 
 
