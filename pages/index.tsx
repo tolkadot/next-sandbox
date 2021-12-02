@@ -1,9 +1,71 @@
+
+import react,  {useEffect, useState, useRef} from 'react'
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 
 const Home: NextPage = () => {
+
+
+const [timerStatus, setTimerStatus] = useState(0); //can be STOP(0) or START(1)
+const [timerValue, setTimerValue] = useState(5); //This contains the current time on the counter
+
+
+const timerValueRef = useRef(timerValue);
+//const timerStatusRef = useRef(timerStatus);
+
+
+function onToggle(e){
+  console.log('toggled');
+  timerStatus === 0 ? setTimerStatus(1) : setTimerStatus(0)
+}
+
+function counter() {
+      setTimerValue(timerValue - 1)
+}
+
+ useEffect(() => {
+console.log('useeffect')
+
+        const interval = setInterval(() => {
+          if(timerStatus === 0) {
+             return  setTimerValue(5)
+
+          } else if(timerValueRef.current === 0 ) {
+            console.log('here')
+               return
+          }
+          else{
+            timerValueRef.current--
+            setTimerValue(timerValueRef.current - 1)
+
+              if(timerValueRef.current === 0) {
+                setTimerStatus(0)
+                setTimerValue(5)
+                clearInterval(interval)
+              }
+
+          }
+
+
+        } , 1000)
+
+       
+
+     
+}, [timerStatus, timerValue, setTimerStatus, setTimerValue ]);
+
+
+
+ function stopCountDown(){
+    console.log('stopped');
+ }
+
+
+
+
+
   return (
     <div className={styles.container}>
       <Head>
@@ -12,16 +74,24 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={styles.main}>
+
+      <header>
         <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
+          Pomodoro Timer
         </h1>
+      </header>
 
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.tsx</code>
-        </p>
+      <button onClick={(e) => onToggle(e)}> {timerStatus === 0 ? `start` : `stop`} </button>
 
+      <div>
+
+      Timer 
+
+      <div> {timerValue} </div>
+
+      </div>
+
+      <main className={styles.main}>
         <div className={styles.grid}>
           <a href="https://nextjs.org/docs" className={styles.card}>
             <h2>Documentation &rarr;</h2>
