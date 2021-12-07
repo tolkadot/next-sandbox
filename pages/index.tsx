@@ -1,54 +1,47 @@
-
-import react,  {useEffect, useState, useRef} from 'react'
-import type { NextPage } from 'next'
-import Head from 'next/head'
-import Image from 'next/image'
-import styles from '../styles/Home.module.css'
+import react, { useEffect, useState, useRef } from "react";
+import type { NextPage } from "next";
+import Head from "next/head";
+import Image from "next/image";
+import styles from "../styles/Home.module.css";
 
 const Home: NextPage = () => {
+  const initialTime = 0;
+  const [timerStatus, setTimerStatus] = useState(0); //can be STOP(0) or START(1)
+  const [timerValue, setTimerValue] = useState(initialTime); //This contains the current time on the counter
+  const [minsValue, setMinsValue] = useState(2); //This contains the current seconds countdown 59 -> 0
 
+  function onToggle() {
+    timerStatus === 0 ? setTimerStatus(1) : setTimerStatus(0);
+  }
 
-const initialTime = 10
-const [timerStatus, setTimerStatus] = useState(0); //can be STOP(0) or START(1)
-const [timerValue, setTimerValue] = useState(initialTime); //This contains the current time on the counter
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (timerStatus === 0) {
+        return;
+      } else {
+        setTimerValue(timerValue - 1);
+        if (timerValue === 1 && minsValue > 1) {
+          setMinsValue(minsValue - 1);
+          setTimerValue(initialTime);
+        }
+        if (timerValue === 1 && minsValue === 1) {
+          setTimerStatus(0);
+          setTimerValue(initialTime);
+          setMinsValue(2);
+        }
+      }
+    }, 1000);
 
+    return () => {
+      clearInterval(interval);
+    };
+  });
 
-function onToggle(){
-  timerStatus === 0 ? setTimerStatus(1) :  setTimerStatus(0)
-}
+   const textInput = useRef();
 
-
- useEffect(() => {
-console.log('useeffect')
-
-        const interval = setInterval(() => {
-          if(timerStatus === 0) {
-             return  
-          }
-          else{
-            setTimerValue(timerValue - 1)
-            if(timerValue === 1) {
-              setTimerStatus(0)
-              setTimerValue(initialTime)
-            }
-
-          }
-        } , 1000)
-
-        return ()=> {
-            clearInterval(interval);
-          };
-
-});
-
-
-
- function stopCountDown(){
-    console.log('stopped');
- }
-
-
-
+  function focusTextInput(){
+      textInput.current.focus();
+  } 
 
 
   return (
@@ -59,21 +52,25 @@ console.log('useeffect')
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
+      <input type="text" ref={textInput} />
+      <button onClick={focusTextInput}>Focus the text input</button>
 
       <header>
-        <h1 className={styles.title}>
-          Pomodoro Timer
-        </h1>
+        <h1 className={styles.title}>Pomodoro Timer</h1>
       </header>
 
-      <button onClick={(e) => onToggle(e)}> {timerStatus === 0 ? `start` : `stop`} </button>
-
-      <div>
-
-      Timer 
-
-      <div> {timerValue} </div>
-
+      <div className="timer-component">
+        <div className={styles.dCenter}>
+          <button onClick={(e) => onToggle(e)}>
+            {" "}
+            {timerStatus === 0 ? `start` : `stop`}{" "}
+          </button>
+          <h2 className={styles.title}>Timer</h2>
+          <div>
+            {" "}
+            {minsValue} : {timerValue > 10 ? timerValue : `0${timerValue}`}{" "}
+          </div>
+        </div>
       </div>
 
       <main className={styles.main}>
@@ -114,14 +111,14 @@ console.log('useeffect')
           target="_blank"
           rel="noopener noreferrer"
         >
-          Powered by{' '}
+          Powered by{" "}
           <span className={styles.logo}>
             <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
           </span>
         </a>
       </footer>
     </div>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
