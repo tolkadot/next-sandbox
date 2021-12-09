@@ -2,6 +2,8 @@ import react, { useEffect, useState, useRef } from "react";
 import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
+import Link from "next/link";
+
 import styles from "../styles/Home.module.css";
 
 const Home: NextPage = () => {
@@ -21,10 +23,12 @@ const Home: NextPage = () => {
 
       <main className={styles.main}>
         <div className={styles.grid}>
-          <a href="/pomodoro" className={styles.card}>
-            <h2>Pomodoro &rarr; </h2>
-            <p>Demo Pomordoro Timer</p>
-          </a>
+          <Link href="/pomodoro">
+            <a className="card">
+              <h2>Pomodoro &rarr; </h2>
+              <p>Demo Pomordoro Timer</p>
+            </a>
+          </Link>
 
           <a href="https://nextjs.org/docs" className={styles.card}>
             <h2>Documentation &rarr;</h2>

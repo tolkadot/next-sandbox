@@ -5,6 +5,8 @@ import Image from "next/image";
 import styles from "../styles/Home.module.css";
 import Timer from '../components/Timer.jsx'
 import Form from "../components/Form.jsx";
+import Link from "next/link";
+
 
 
 
@@ -40,7 +42,7 @@ const Pomodoro: NextPage = () => {
       </Head>
 
       <header style={{ padding: "2rem" }}>
-        <a href="/">&larr; home</a>
+        <Link href="/">&larr; home</Link>
       </header>
       <main className={styles.main}>
         <div>
