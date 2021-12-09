@@ -24,7 +24,7 @@ const Home: NextPage = () => {
       <main className={styles.main}>
         <div className={styles.grid}>
           <Link href="/pomodoro">
-            <a className="card">
+            <a className={styles.card}>
               <h2>Pomodoro &rarr; </h2>
               <p>Demo Pomordoro Timer</p>
             </a>
