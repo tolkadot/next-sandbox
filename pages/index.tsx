@@ -5,44 +5,7 @@ import Image from "next/image";
 import styles from "../styles/Home.module.css";
 
 const Home: NextPage = () => {
-  const initialTime = 0;
-  const [timerStatus, setTimerStatus] = useState(0); //can be STOP(0) or START(1)
-  const [timerValue, setTimerValue] = useState(initialTime); //This contains the current time on the counter
-  const [minsValue, setMinsValue] = useState(2); //This contains the current seconds countdown 59 -> 0
-
-  function onToggle() {
-    timerStatus === 0 ? setTimerStatus(1) : setTimerStatus(0);
-  }
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      if (timerStatus === 0) {
-        return;
-      } else {
-        setTimerValue(timerValue - 1);
-        if (timerValue === 1 && minsValue > 1) {
-          setMinsValue(minsValue - 1);
-          setTimerValue(initialTime);
-        }
-        if (timerValue === 1 && minsValue === 1) {
-          setTimerStatus(0);
-          setTimerValue(initialTime);
-          setMinsValue(2);
-        }
-      }
-    }, 1000);
-
-    return () => {
-      clearInterval(interval);
-    };
-  });
-
-   const textInput = useRef();
-
-  function focusTextInput(){
-      textInput.current.focus();
-  } 
-
+  
 
   return (
     <div className={styles.container}>
@@ -52,29 +15,17 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <input type="text" ref={textInput} />
-      <button onClick={focusTextInput}>Focus the text input</button>
-
       <header>
-        <h1 className={styles.title}>Pomodoro Timer</h1>
+        <h1 className={styles.title}>Next.js Sandbox</h1>
       </header>
-
-      <div className="timer-component">
-        <div className={styles.dCenter}>
-          <button onClick={(e) => onToggle(e)}>
-            {" "}
-            {timerStatus === 0 ? `start` : `stop`}{" "}
-          </button>
-          <h2 className={styles.title}>Timer</h2>
-          <div>
-            {" "}
-            {minsValue} : {timerValue > 10 ? timerValue : `0${timerValue}`}{" "}
-          </div>
-        </div>
-      </div>
 
       <main className={styles.main}>
         <div className={styles.grid}>
+          <a href="/pomodoro" className={styles.card}>
+            <h2>Pomodoro &rarr; </h2>
+            <p>Demo Pomordoro Timer</p>
+          </a>
+
           <a href="https://nextjs.org/docs" className={styles.card}>
             <h2>Documentation &rarr;</h2>
             <p>Find in-depth information about Next.js features and API.</p>

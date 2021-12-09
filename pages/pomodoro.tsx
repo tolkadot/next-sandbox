@@ -3,24 +3,23 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
+import Timer from '../components/Timer.jsx'
+import Form from "../components/Form.jsx";
+
+
 
 const Pomodoro: NextPage = () => {
-  const initialTime = 10; //this is in seconds
+  const initialTime = 100; //this is in seconds
   const [timerStatus, setTimerStatus] = useState(false); //can be STOP(false) or START(true)
   const [timerValue, setTimerValue] = useState(initialTime); //This contains the current time on the counter in seconds
-  // const [minsValue, setMinsValue] = useState(2); //This contains the current seconds countdown 59 -> 0
-
-  function onToggle(e) {
-    timerStatus === false ? setTimerStatus(true) : setTimerStatus(false);
-  }
-
+  
   useEffect(() => {
     const interval = setInterval(() => {
       if (timerStatus === false) {
         return;
       } else {
-        setTimerValue(timerValue-1);
-        if(timerValue === 0 ) {
+        setTimerValue(timerValue - 1);
+        if (timerValue === 0) {
           setTimerStatus(false);
           setTimerValue(initialTime);
         }
@@ -32,7 +31,6 @@ const Pomodoro: NextPage = () => {
     };
   });
 
- 
   return (
     <div className={styles.container}>
       <Head>
@@ -41,30 +39,24 @@ const Pomodoro: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
+      <header style={{ padding: "2rem" }}>
+        <a href="/">&larr; home</a>
+      </header>
       <main className={styles.main}>
-        <div className={styles.grid}>
+        <div>
           <header>
             <h1 className={styles.title}>Pomodoro Timer</h1>
           </header>
-
-          <div className="timer-component">
-            <div className={styles.dCenter}>
-              <button onClick={(e) => onToggle(e)}>
-                {timerStatus === false ? `start` : `stop`}
-              </button>
-              <h2 className={styles.title}>Timer</h2>
-              <div>
-                {Math.floor(timerValue / 60)} :
-                {Math.floor(timerValue - 60 * (Math.floor(timerValue / 60))) > 9  ? Math.floor( timerValue - 60 * (Math.floor(timerValue / 60))) : `0${Math.floor( timerValue - 60 * (Math.floor(timerValue / 60)))}`} 
-              </div>
-            </div>
-          </div>
         </div>
+        <Form setTimerValue={setTimerValue} timerStatus={timerStatus} />
+        <Timer
+          timerValue={timerValue}
+          timerStatus={timerStatus}
+          setTimerStatus={setTimerStatus}
+        />
       </main>
-
-      <footer className={styles.footer}></footer>
     </div>
   );
-};
+};;
 
 export default Pomodoro;
