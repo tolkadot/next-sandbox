@@ -6,25 +6,44 @@ import styles from "../styles/Home.module.css";
 import Timer from '../components/Timer.jsx'
 import Form from "../components/Form.jsx";
 import Link from "next/link";
+import Confetti from "react-dom-confetti";
 
 
 
 
 const Pomodoro: NextPage = () => {
-  const initialTime = 100; //this is in seconds
+  const initialTime = 3; //this is in seconds
   const [timerStatus, setTimerStatus] = useState(false); //can be STOP(false) or START(true)
   const [timerValue, setTimerValue] = useState(initialTime); //This contains the current time on the counter in seconds
-  
+  const [confetti, setConfetti] = useState(false); //This contains the current time on the counter in seconds
+
+  const config = {
+    angle: 90,
+    spread: 360,
+    startVelocity: 40,
+    elementCount: 70,
+    dragFriction: 0.12,
+    duration: 3000,
+    stagger: 3,
+    width: "10px",
+    height: "10px",
+    perspective: "500px",
+    colors: ["#a864fd", "#29cdff", "#78ff44", "#ff718d", "#fdff6a"],
+  };
+
   useEffect(() => {
     const interval = setInterval(() => {
       if (timerStatus === false) {
         return;
       } else {
         setTimerValue(timerValue - 1);
-        if (timerValue === 0) {
-          setTimerStatus(false);
-          setTimerValue(initialTime);
-        }
+         if (timerValue === 1) {
+           setConfetti(true);
+         }
+          if (timerValue === 0) {
+            setTimerStatus(false);
+            setTimerValue(initialTime);
+          }
       }
     }, 1000);
 
@@ -55,10 +74,12 @@ const Pomodoro: NextPage = () => {
           timerValue={timerValue}
           timerStatus={timerStatus}
           setTimerStatus={setTimerStatus}
+          setConfetti={setConfetti}
         />
+        <Confetti active={confetti} config={config} />
       </main>
     </div>
   );
-};;
+};;;
 
 export default Pomodoro;
