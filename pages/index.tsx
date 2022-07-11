@@ -7,8 +7,6 @@ import Link from "next/link";
 import styles from "../styles/Home.module.css";
 
 const Home: NextPage = () => {
-  
-
   return (
     <div className={styles.container}>
       <Head>
@@ -27,6 +25,12 @@ const Home: NextPage = () => {
             <a className={styles.card}>
               <h2>Pomodoro &rarr; </h2>
               <p>Demo Pomordoro Timer</p>
+            </a>
+          </Link>
+          <Link href="/guess">
+            <a className={styles.card}>
+              <h2>Guessing Game &rarr; </h2>
+              <p>Demo Guessing Game</p>
             </a>
           </Link>
 
