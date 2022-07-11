@@ -46,7 +46,7 @@ const Guessed: NextPage = () => {
   const { reward: confettiReward, isAnimating: isConfettiAnimating } =
     useReward("confettiReward", "emoji", { emoji: [interaction] });
 
-  const onChange = (e) => {
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const guess = e.target.value;
     setGuessed(guess);
     const result = catchphrase.find((el) => el.name === guess);
