@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useReducer } from "react";
 import type { NextPage } from "next";
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
@@ -42,7 +42,9 @@ const Guessed: NextPage = () => {
 
   const [guessed, setGuessed] = useState("");
   const [interaction, setInteraction] = useState(catchphrase[0].code);
+  const [win, setWin] = useState(false);
   const [confetti, setConfetti] = useState(false); //This contains the current time on the counter in seconds
+
   const { reward: confettiReward, isAnimating: isConfettiAnimating } =
     useReward("confettiReward", "emoji", { emoji: [interaction] });
 
@@ -53,12 +55,18 @@ const Guessed: NextPage = () => {
     if (result) {
       setConfetti(true);
       setInteraction(result.code);
-      confettiReward();
+      setWin(true);
     }
   };
 
+  useEffect(() => {
+    confettiReward();
+    setWin(false);
+    setConfetti(false);
+  }, [win]);
+
   return (
-    <div className={styles.container}>
+    <div className={styles.containerBlack}>
       <Head>
         <title>Pomorodro</title>
         <meta name="Guess the secret word" content="Guess the secret word" />
@@ -66,7 +74,9 @@ const Guessed: NextPage = () => {
       </Head>
 
       <header style={{ padding: "2rem" }}>
-        <Link href="/">&larr; home</Link>
+        <Link href="/">
+          <a className={styles.rainbow}> &larr; home</a>
+        </Link>
       </header>
       <main className={styles.main}>
         <div>
@@ -76,6 +86,7 @@ const Guessed: NextPage = () => {
         </div>
         <span id="confettiReward" />
         <input
+          className={styles.rainbowInput}
           id="guessed"
           value={guessed}
           onChange={onChange}

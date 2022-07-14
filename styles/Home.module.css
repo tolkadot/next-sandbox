@@ -3,6 +3,11 @@
 .container {
   padding: 0 2rem;
 }
+.containerBlack {
+  padding: 0 2rem;
+  min-height: 100vh;
+  background-color: #21292D;
+}
 
 .main {
   min-height: calc(100vh - 300px);
@@ -136,11 +141,43 @@
   flex-direction: row-reverse;
 }
 
+
+
 .rainbow {
-  background-image: linear-gradient(to left, violet, indigo, blue, green, yellow, orange, red);
+  background-image: linear-gradient(to left, #EBB271, #FF9789, #FF7AA3 ,#B486B1, #859ED0 ,#68B6B7 ,#6FC9B0, #8ACDA7);
     -webkit-background-clip: text;
     color: transparent;
     font-size: clamp(1.4rem, 3vw, 4rem);
     text-align: center;
     margin-bottom: 1rem;
+}
+.rainbowInput {
+  width: 372px;min-height: 40px;
+  max-width: 100%;
+  border: 5px solid transparent; 
+  background: linear-gradient(white, white),
+  linear-gradient(to left,
+    #EBB271,
+    #FF9789,
+    #FF7AA3,
+    #B486B1,
+    #859ED0,
+    #68B6B7,
+    #6FC9B0,
+    #8ACDA7);
+  background-origin: padding-box, border-box;
+  background-repeat: no-repeat;
+  border: 2px solid transparent;
+  padding: 1rem;
+  font-size: 1.33rem;
+}
+
+
+.rainbowInput:focus,
+.rainbowInput:focus-visible{
+/* outline: violet auto 2px;
+outline-offset: 3px;
+border-radius: 0; */
+outline: 0;
+box-shadow: 0 0 3pt 2pt orange;
 }
